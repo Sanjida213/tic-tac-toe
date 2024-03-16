@@ -1,0 +1,76 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 20px;
+  height: 100vh;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: teal;
+  // background-color: black;
+} 
+
+.gameBoard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 250px;
+  height: 270px;
+  background-color: rgb(8, 88, 88);
+  background-color: black;
+  gap: 5px;
+
+
+  .cells {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // background-color: rgb(8, 88, 88);
+    background-color: teal;
+    font-size: 50px;
+    font-family: "Permanent Marker", cursive;
+    cursor: pointer;
+  }
+}
+
+.scores {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  padding-top: 20px;
+
+  .score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+  }
+}
+
+// fix this to go in the center
+.restart-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  
+
+
+
+// @media screen and (min-width: 768px) {
+  
+//   .board {
+//     width: 500px;
+//     height: 500px;
+//     gap: 5px;
+// }
+
+// }
+  
+  
+  
