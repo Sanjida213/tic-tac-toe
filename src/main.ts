@@ -35,8 +35,8 @@ const cells = document.querySelectorAll<HTMLElement>(".cells")
 //   console.log(cell.dataset.index);
 // })
  
-if (!cells) {
-  throw new Error ("Issue with cells")
+if (cells.length === 0) {
+  throw new Error ("Issue with querySelectorAll")
 }
 
 
