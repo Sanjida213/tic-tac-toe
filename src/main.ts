@@ -19,7 +19,7 @@ const gameBoard = document.querySelector<HTMLElement>(".gameBoard")
 const cells = document.querySelectorAll<HTMLElement>(".cells")
 const cellBoxes = document.querySelectorAll("[data-cell]")
 const currentPlayerTurn = document.querySelector<HTMLHeadingElement>(".currentPlayer")
-
+const scoreBoard = document.querySelectorAll(".score")
 
 
 
@@ -31,6 +31,10 @@ if (cells.length === 0 ) {
 
 if (cellBoxes.length === 0 ) {
   throw new Error ("Issue with querySelectorAll")
+}
+
+if (scoreBoard.length === 0 ) {
+  throw new Error ("Issue with scoreBoard")
 }
 
 if (!gameBoard || !currentPlayerTurn) {
@@ -116,7 +120,6 @@ const winningMessage = () => {
 }
 
 
-
 const winningCombinations = [
   [0,1,2],
   [3,4,5],
@@ -145,9 +148,14 @@ const playerHasWon = () => {
   
 
 
+// create counter for scores
+// if  current player wins, then current score goes up  by 1
 
+const scoreCounter = () => {
+  if (playerHasWon()) {
 
-
+  }
+}
 
 // const restart = document.querySelector<HTMLButtonElement>(".restart-button")
 
