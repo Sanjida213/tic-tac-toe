@@ -2,14 +2,15 @@ import './style.scss'
 
 /* PSEUDOCODE
 
-create an empty 3x3 grid.
-assign player 1 as X and player 2 as 0
-player has to click on the grid to choose a positon -
-- if that position is not occupied, they can place their symbol
+create an empty 3x3 grid. >
+assign player 1 as X and player 2 as 0 >
+player has to click on the grid to choose a positon - 
+- if that position is not occupied, they can place their symbol >
 - if it position is occupied, prompt the player to choose again -> maybe to for aloop for the cell with i < 1
-once the player has placed their symbol, the board should be updated
+once the player has placed their symbol, the board should be updated >
 create a winning function that is 3 same symbols in a row, column or diagonal
 - if player wins, end game -> add package e.g. confetti
+- if player wins, counter for that player should go up
 - if board is full but there are no winnters, declare the game a draw 
 if players want to play again, reset the board and start a new game, if not end game
 
@@ -49,10 +50,20 @@ const playerO = "O";
 let currentPlayer = "X";
 
 
+// start game function
+
+const startGame = () => {
+
+  if (currentPlayer === playerO) {
+    currentPlayer = playerX
+    currentPlayerTurn.textContent = `Player 1 to move`
+  } else if (currentPlayer === playerX) {
+    currentPlayer = playerO
+    currentPlayerTurn.textContent = `Player 2 to move`
+  }   
+}
+
 // player has to click on the grid to choose a positon -
-
-
-
 
 const choosePosition = (event: Event)  => {
   
@@ -83,13 +94,7 @@ const choosePosition = (event: Event)  => {
     console.log(`Player ${currentPlayer} has won`) 
     winningMessage()    // we want to vreate 2 functions - end game and winning message
   } else {
-      if (currentPlayer === playerO) {
-      currentPlayer = playerX
-      currentPlayerTurn.textContent = `Player 1 to move`
-    } else if (currentPlayer === playerX) {
-      currentPlayer = playerO
-      currentPlayerTurn.textContent = `Player 2 to move`
-    }   
+      startGame()  
   }
 
   // if cell is occupied and player selects it, prompt to tell them to tyr again
@@ -149,13 +154,23 @@ const playerHasWon = () => {
 
 
 // create counter for scores
-// if  current player wins, then current score goes up  by 1
+// if current player wins, then current score goes up  by 1
 
-const scoreCounter = () => {
-  if (playerHasWon()) {
+// if (playerHasWon()) {
+//   scoreBoard.forEach(score) => {
+//     score.innerText += "1"
+//   }
+// }
 
-  }
-}
+
+
+
+
+
+
+
+
+
 
 // const restart = document.querySelector<HTMLButtonElement>(".restart-button")
 
