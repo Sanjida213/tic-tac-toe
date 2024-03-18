@@ -15,35 +15,34 @@ if players want to play again, reset the board and start a new game, if not end 
 
 */
 
-// const gameBoard = document.querySelector<HTMLElement>(".gameboard")
+const gameBoard = document.querySelector<HTMLElement>(".gameBoard")
 const cells = document.querySelectorAll<HTMLElement>(".cells")
-// const winConditions = [
-//   [0, 1, 2],
-//   [3, 4, 5],
-//   [6, 7, 8],
-//   [0, 4, 8],
-//   [2, 4, 6],
-//   [0, 3, 6],
-//   [1, 4, 7],
-//   [2, 5, 8]
-// ]
+const cellBoxes = document.querySelectorAll("[data-cell]")
+const currentPlayerTurn = document.querySelector<HTMLHeadingElement>(".currentPlayer")
 
-// console.log(winConditions)
 
-// cells.forEach(cell => {
-//   // Access the data-index attribute and log it
-//   console.log(cell.dataset.index);
-// })
- 
-if (cells.length === 0) {
+
+
+ // function to start game 
+
+if (cells.length === 0 ) {
   throw new Error ("Issue with querySelectorAll")
 }
 
+if (cellBoxes.length === 0 ) {
+  throw new Error ("Issue with querySelectorAll")
+}
+
+if (!gameBoard || !currentPlayerTurn) {
+  throw new Error ("Issue with board")
+}
+console.log(cells)
 
 
-let player1 = "X";
-let player2 = "O";
-let turn = player1;
+
+const playerX = "X";
+const playerO = "O";
+let currentPlayer = "X";
 
 
 // player has to click on the grid to choose a positon -
@@ -52,74 +51,121 @@ let turn = player1;
 
 
 const choosePosition = (event: Event)  => {
+  
   const cellChosen = event.currentTarget as HTMLElement;
-  console.log("current player" + turn)
+  console.log("current player" + currentPlayer)
   
   if (cellChosen.textContent === "") {
-     cellChosen.textContent += turn;
+     cellChosen.textContent += currentPlayer;
   }
 
   // if turn = p2, select 'O', else if turn = p1. select 'X
-  // if (turn === player2) {   // the === returns a true/false so  turn === player 2 is false so we got straight to the else statemtn
-  //   turn = player1            // but if turn is not === player 2 which means its player1, that results true as line 29 assigns turn = playe1
+  // if (turn === playerO) {   // the === returns a true/false so  turn === player 2 is false so we got straight to the else statemtn
+  //   turn = playerX            // but if turn is not === player 2 which means its player1, that results true as line 29 assigns turn = playe1
   // } else {                    // so then it returns the if statement
-  //   turn = player2
+  //   turn = playerO
   // }
 
-  if (turn === player2) {
-    turn = player1
-  } else if (turn === player1) {
-    turn = player2
-  } 
 
-  console.log("next player" + turn)
+  console.log("next player" + currentPlayer)
+
+
+  // if (playerHasWon()) {
+  //   console.log(`Player ${currentPlayer} has won`)
+  //   return winningMessage()
+  // }
+
+  if (playerHasWon()) {
+    console.log(`Player ${currentPlayer} has won`) 
+    winningMessage()    // we want to vreate 2 functions - end game and winning message
+  } else {
+      if (currentPlayer === playerO) {
+      currentPlayer = playerX
+      currentPlayerTurn.textContent = `Player 1 to move`
+    } else if (currentPlayer === playerX) {
+      currentPlayer = playerO
+      currentPlayerTurn.textContent = `Player 2 to move`
+    }   
+  }
 
   // if cell is occupied and player selects it, prompt to tell them to tyr again
   // if(cellChosen.textContent === "") {
   //   return alert("Try again")
   // }
 
+  //if all the content of the cells are not empty and playerhsaWon == false then function draw to be invoked
+  
+  // cells.forEach(cell => {
+  //     if ((cell.textContent === playerX || playerO) && !playerHasWon() ) {
+  //       console.log(`ee`)
+  //     }
+  //     })
+  
+
 };
 
 
 cells.forEach(cell => {
-  cell.addEventListener("click", choosePosition)
+  cell.addEventListener("click", choosePosition, {once: true})
 });
 
+const winningMessage = () => {
+  currentPlayerTurn.textContent = `${currentPlayer} HAS WON!`
+  currentPlayerTurn.style.fontSize = "50px"
+  currentPlayerTurn.style.textAlign = "center"
+}
 
 
-// we need to now make it so that if player hits 3 in a row, they win
 
-// const player1Moves = winConditions
-// if (player1Moves) {
-//    console.log(`Player1 wins`)
+const winningCombinations = [
+  [0,1,2],
+  [3,4,5],
+  [6,7,8],
+  [0,4,8],
+  [2,4,6],
+  [0,3,6],
+  [1,4,7],
+  [2,5,8]
+]
+
+const playerHasWon = () => {
+  for (let condition of winningCombinations) {
+    const [a, b, c] = condition;
+
+    if (
+      cells[a].textContent === currentPlayer &&
+      cells[b].textContent === currentPlayer &&
+      cells[c].textContent === currentPlayer
+     ) {
+      return true 
+     }
+  } 
+    return false
+  }
+  
+
+
+
+
+
+
+// const restart = document.querySelector<HTMLButtonElement>(".restart-button")
+
+// if (!restart) {
+//   throw new Error ("Isssue with restart button")
 // }
-
-
-
-
-
-
-
-
-
-
+// // restart button 
+// // this clears out the game but when i restart it the players dont alternate
+// const handleClickRestart = () => {
+//   cells.forEach(cell => {
+//     cell.innerHTML = ""
+//   })
+  
+// }
+// restart.addEventListener("click", handleClickRestart)
 
 /*
-const restart = document.querySelector<HTMLButtonElement>(".restart-button")
-
-if (!restart) {
-  throw new Error ("Isssue with restart button")
-}
-// restart button 
-// this clears out the game but when i restart it the players dont alternate
-const handleClickRestart = () => {
-  cells.forEach(cell => {
-    cell.textContent = ""
-  })
-  player1 = "";
-  player2 = "";
-  
-}
-restart.addEventListener("click", handleClickRestart)
+can use ts-dom notes to change the innerText of the button once its been clicked 
+to say 'game restarted
 */
+
