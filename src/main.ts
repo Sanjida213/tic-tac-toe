@@ -21,7 +21,7 @@ const cells = document.querySelectorAll<HTMLElement>(".cells")
 const currentPlayerTurn = document.querySelector<HTMLHeadingElement>(".currentPlayer")
 const scoreBoard = document.querySelectorAll(".score")
 const playAgain = document.querySelector<HTMLButtonElement>(".playAgain")
-
+const restart = document.querySelector<HTMLButtonElement>(".restart-button")
 
 
 if (cells.length === 0 ) {
@@ -32,8 +32,11 @@ if (scoreBoard.length === 0 ) {
   throw new Error ("Issue with scoreBoard")
 }
 
-if (!gameBoard || !currentPlayerTurn || !playAgain) {
-  throw new Error ("Issue with board")
+if (!gameBoard || 
+  !currentPlayerTurn || 
+  !playAgain || 
+  !restart) {
+  throw new Error ("Issue with selector")
 }
 
 
@@ -168,48 +171,49 @@ console.log(scoreBoard)
 
 // when player x wins twice, player 2 goes to 3 points automatically
 
-
-
-
-const restart = document.querySelector<HTMLButtonElement>(".restart-button")
-
-if (!restart) {
-  throw new Error ("Isssue with restart button")
+const updateScoreBoard = () => {
+  if (currentPlayer === playerX) {
+    scoreX ++;
+    scoreBoard[0].innerHTML = scoreX.toString()
+  } else if (currentPlayer === playerO) {
+    scoreO ++;
+    scoreBoard[2].innerHTML = scoreO.toString()
+  } 
 }
+
+
+
+
 // restart button 
-// this clears out the game but when i restart it the players dont alternate
 const handleClickRestart = () => {
   cells.forEach(cell => {
     cell.textContent = ""
   }) 
-  currentPlayer = currentPlayer
+  currentPlayer = "X"
   currentPlayerTurn.textContent = `${currentPlayer} to move`;
-  scoreBoard[0].innerHTML = "";
-  scoreBoard[1].innerHTML = "";
-  scoreBoard[2].innerHTML = "";
-  
+
+  scoreX = 0
+  scoreO = 0
+  scoreTie = 0
+
+  scoreBoard[0].innerHTML = scoreX.toString();
+  scoreBoard[1].innerHTML = scoreO.toString();
+  scoreBoard[2].innerHTML = scoreTie.toString();
+
   cells.forEach(cell => {
       cell.addEventListener("click", choosePosition, { once: true });
   });
 }
+
 restart.addEventListener("click", handleClickRestart)
-
-/*
-can use ts-dom notes to change the innerText of the button once its been clicked 
-to say 'game restarted
-*/
-
 
 
 
 
 
 /// list: 
-// make a draw function 
-// make sure the draw function score board works
 // once someone has won or drawed, they should be able to click on board and 
 // it restarts without changing the scoreboard
-// make restart function
 // create README and look at mark scheme
 
 
@@ -222,21 +226,6 @@ to say 'game restarted
 
 
 
-const updateScoreBoard = () => {
-  if (currentPlayer === playerX) {
-    scoreX ++;
-    scoreBoard[0].innerHTML = scoreX.toString()
-    // playAgain()
-  } else if (currentPlayer === playerO) {
-    scoreO ++;
-    scoreBoard[2].innerHTML = scoreO.toString()
-  } 
-  // else {
-  //   let score: number = 0
-  //   score ++;
-  //   scoreBoard[1].innerHTML += score
-  // }
-}
 
 
 
