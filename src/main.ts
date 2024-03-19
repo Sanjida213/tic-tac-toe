@@ -62,26 +62,31 @@ const alternatePlayers = () => {
 
 
 // player has to click on the grid to choose a positon -
+// let gameOver = false; // so game is still going on
+
+
 
 const choosePosition = (event: Event)  => {
-  
+ 
+
   const cellChosen = event.currentTarget as HTMLElement;
   console.log("current player" + currentPlayer)
+ 
+  // if (gameOver === false) {
+    if (cellChosen.textContent === "") {
+    cellChosen.textContent += currentPlayer;
+    }
+  // }
   
-  if (cellChosen.textContent === "") {
-     cellChosen.textContent += currentPlayer;
-  }
 
-    if (playerHasWon()) {
+  if (playerHasWon()) {
     console.log(`Player ${currentPlayer} has won`) 
-    winningMessage()    // we want to create 2 functions - end game and winning message
+    winningMessage()   
     updateScoreBoard()
-    
-    
-    // and for the player to not be able to press anymore cells
+    roundOver()
     
   } else {
-    alternatePlayers()  
+      alternatePlayers()  
   } 
 
   draw()
@@ -107,6 +112,12 @@ const playNextRound = () => {
 
 playAgain.addEventListener("click", playNextRound)
 
+
+const roundOver = () => {
+  cells.forEach(cell => {
+    cell.removeEventListener("click", choosePosition);
+  });
+};
 
 
 // winning message/condition
