@@ -35,13 +35,15 @@ if (scoreBoard.length === 0 ) {
 if (!gameBoard || !currentPlayerTurn || !playAgain) {
   throw new Error ("Issue with board")
 }
-console.log(cells)
-
 
 
 const playerX = "X";
 const playerO = "O";
 let currentPlayer = "X";
+
+let scoreX: number = 0
+let scoreO: number = 0
+let scoreTie: number = 0
 
 
 const alternatePlayers = () => {
@@ -67,8 +69,6 @@ const choosePosition = (event: Event)  => {
   if (cellChosen.textContent === "") {
      cellChosen.textContent += currentPlayer;
   }
-
-
 
     if (playerHasWon()) {
     console.log(`Player ${currentPlayer} has won`) 
@@ -142,30 +142,14 @@ const playerHasWon = () => {
   }
   
 
-  // create draw function
-  // const draw = () => {
-  //   if (gameBoardIsFilled() && !playerHasWon()) {
-  //     // console.log (`This is a ${draw}`)
-  //     currentPlayerTurn.textContent = `Draw :(`
-  //   }
-  // }
-
-  // const gameBoardIsFilled = () => {
-  //   for (const cell of cells) {
-  //     if (cell.textContent !== "") {
-  //       return true;
-  //     }
-  //   }
-  // }  
-
 // draw
 const draw = () => {
   if (gameBoardIsFilled() && !playerHasWon()) {
     console.log("its a draw")
     currentPlayerTurn.textContent = `Draw :(`;
   
-    score ++;
-    scoreBoard[1].innerHTML = score.toString()
+    scoreTie ++;
+    scoreBoard[1].innerHTML = scoreTie.toString()
   } 
 };
 
@@ -187,20 +171,28 @@ console.log(scoreBoard)
 
 
 
-// const restart = document.querySelector<HTMLButtonElement>(".restart-button")
+const restart = document.querySelector<HTMLButtonElement>(".restart-button")
 
-// if (!restart) {
-//   throw new Error ("Isssue with restart button")
-// }
-// // restart button 
-// // this clears out the game but when i restart it the players dont alternate
-// const handleClickRestart = () => {
-//   cells.forEach(cell => {
-//     cell.innerHTML = ""
-//   })
+if (!restart) {
+  throw new Error ("Isssue with restart button")
+}
+// restart button 
+// this clears out the game but when i restart it the players dont alternate
+const handleClickRestart = () => {
+  cells.forEach(cell => {
+    cell.textContent = ""
+  }) 
+  currentPlayer = currentPlayer
+  currentPlayerTurn.textContent = `${currentPlayer} to move`;
+  scoreBoard[0].innerHTML = "";
+  scoreBoard[1].innerHTML = "";
+  scoreBoard[2].innerHTML = "";
   
-// }
-// restart.addEventListener("click", handleClickRestart)
+  cells.forEach(cell => {
+      cell.addEventListener("click", choosePosition, { once: true });
+  });
+}
+restart.addEventListener("click", handleClickRestart)
 
 /*
 can use ts-dom notes to change the innerText of the button once its been clicked 
@@ -229,16 +221,15 @@ to say 'game restarted
   // }
 
 
-  let score: number = 0
 
 const updateScoreBoard = () => {
   if (currentPlayer === playerX) {
-    score ++;
-    scoreBoard[0].innerHTML = score.toString()
+    scoreX ++;
+    scoreBoard[0].innerHTML = scoreX.toString()
     // playAgain()
   } else if (currentPlayer === playerO) {
-    score ++;
-    scoreBoard[2].innerHTML = score.toString()
+    scoreO ++;
+    scoreBoard[2].innerHTML = scoreO.toString()
   } 
   // else {
   //   let score: number = 0
