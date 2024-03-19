@@ -18,19 +18,13 @@ if players want to play again, reset the board and start a new game, if not end 
 
 const gameBoard = document.querySelector<HTMLElement>(".gameBoard")
 const cells = document.querySelectorAll<HTMLElement>(".cells")
-const cellBoxes = document.querySelectorAll("[data-cell]")
 const currentPlayerTurn = document.querySelector<HTMLHeadingElement>(".currentPlayer")
 const scoreBoard = document.querySelectorAll(".score")
 
 
 
- // function to start game 
 
 if (cells.length === 0 ) {
-  throw new Error ("Issue with querySelectorAll")
-}
-
-if (cellBoxes.length === 0 ) {
   throw new Error ("Issue with querySelectorAll")
 }
 
@@ -50,9 +44,20 @@ const playerO = "O";
 let currentPlayer = "X";
 
 
-// start game function
+// function to start game 
 
-const startGame = () => {
+// const playAgain = () => {
+//   cells.forEach(cell => {
+//     cell.textContent = ""
+//   })
+//   gameBoard.addEventListener("click", playAgain)
+// }
+
+// timer delayer
+// ^^ it should only clear out once i click on the gameboard
+
+
+const alternatePlayers = () => {
 
   if (currentPlayer === playerO) {
     currentPlayer = playerX
@@ -62,6 +67,8 @@ const startGame = () => {
     currentPlayerTurn.textContent = `Player 2 to move`
   }   
 }
+
+
 
 // player has to click on the grid to choose a positon -
 
@@ -74,49 +81,30 @@ const choosePosition = (event: Event)  => {
      cellChosen.textContent += currentPlayer;
   }
 
-  // if turn = p2, select 'O', else if turn = p1. select 'X
-  // if (turn === playerO) {   // the === returns a true/false so  turn === player 2 is false so we got straight to the else statemtn
-  //   turn = playerX            // but if turn is not === player 2 which means its player1, that results true as line 29 assigns turn = playe1
-  // } else {                    // so then it returns the if statement
-  //   turn = playerO
-  // }
 
+  // draw()
 
-  console.log("next player" + currentPlayer)
+     if (playerHasWon()) {
+      console.log(`Player ${currentPlayer} has won`) 
+      winningMessage()    // we want to create 2 functions - end game and winning message
+      updateScoreBoard()
 
-
-  // if (playerHasWon()) {
-  //   console.log(`Player ${currentPlayer} has won`)
-  //   return winningMessage()
-  // }
-
-  if (playerHasWon()) {
-    console.log(`Player ${currentPlayer} has won`) 
-    winningMessage()    // we want to vreate 2 functions - end game and winning message
-  } else {
-      startGame()  
-  }
-
-  // if cell is occupied and player selects it, prompt to tell them to tyr again
-  // if(cellChosen.textContent === "") {
-  //   return alert("Try again")
-  // }
-
-  //if all the content of the cells are not empty and playerhsaWon == false then function draw to be invoked
+      
+      // create draw function
+      // and for the player to not be able to press anymore cells
+      
+    } else {
+      alternatePlayers()  
+    } 
   
-  // cells.forEach(cell => {
-  //     if ((cell.textContent === playerX || playerO) && !playerHasWon() ) {
-  //       console.log(`ee`)
-  //     }
-  //     })
-  
-
 };
 
 
 cells.forEach(cell => {
   cell.addEventListener("click", choosePosition, {once: true})
 });
+
+
 
 const winningMessage = () => {
   currentPlayerTurn.textContent = `${currentPlayer} HAS WON!`
@@ -152,9 +140,25 @@ const playerHasWon = () => {
   }
   
 
+  // create draw function
+  const draw = () => {
+    if (gameBoardIsFilled() && !playerHasWon()) {
+      // console.log (`This is a ${draw}`)
+      currentPlayerTurn.textContent = `Draw :(`
+    }
+  }
 
+  const gameBoardIsFilled = () => {
+    for (const cell of cells) {
+      if (cell.textContent !== "") {
+        return true;
+      }
+    }
+  }  
+  
+  
 // create counter for scores
-// if current player wins, then current score goes up  by 1
+// if current player wins, then current score goes up  by 1, if draw, tie = 1
 
 // if (playerHasWon()) {
 //   scoreBoard.forEach(score) => {
@@ -165,7 +169,7 @@ const playerHasWon = () => {
 
 
 
-
+console.log(scoreBoard)
 
 
 
@@ -192,3 +196,69 @@ can use ts-dom notes to change the innerText of the button once its been clicked
 to say 'game restarted
 */
 
+
+
+
+
+
+/// list: 
+// make a draw function 
+// make sure the draw function score board works
+// once someone has won or drawed, they should be able to click on board and 
+// it restarts without changing the scoreboard
+// make restart function
+// create README and look at mark scheme
+
+
+ // if turn = p2, select 'O', else if turn = p1. select 'X
+  // if (turn === playerO) {   // the === returns a true/false so  turn === player 2 is false so we got straight to the else statemtn
+  //   turn = playerX            // but if turn is not === player 2 which means its player1, that results true as line 29 assigns turn = playe1
+  // } else {                    // so then it returns the if statement
+  //   turn = playerO
+  // }
+
+
+
+
+const updateScoreBoard = () => {
+  if (currentPlayer === playerX) {
+    let score: number = 0
+    score ++;
+    scoreBoard[0].innerHTML += score  
+    // playAgain()
+  } else if (currentPlayer === playerO) {
+    let score: number = 0
+    score ++;
+    scoreBoard[2].innerHTML += score 
+  } else {
+    let score: number = 0
+    score ++;
+    scoreBoard[1].innerHTML += score
+  }
+}
+
+
+
+
+  // if (playerHasWon()) {
+  //   console.log(`Player ${currentPlayer} has won`)
+  //   return winningMessage()
+  // }
+
+  // startGame()
+
+  
+
+  // if cell is occupied and player selects it, prompt to tell them to tyr again
+  // if(cellChosen.textContent === "") {
+  //   return alert("Try again")
+  // }
+
+  //if all the content of the cells are not empty and playerhsaWon == false then function draw to be invoked
+  
+  // cells.forEach(cell => {
+  //     if ((cell.textContent === playerX || playerO) && !playerHasWon() ) {
+  //       console.log(`ee`)
+  //     }
+  //     })
+  
