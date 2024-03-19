@@ -23,7 +23,7 @@ main {
   background-color: teal;
 }
 
-h1 {
+h2 {
   padding-bottom: 30px;
 }
 
@@ -78,7 +78,12 @@ h1 {
   font-size: 18px;
   cursor: pointer;
 }
-  
+
+.restart-button:active {
+  font-size: 22px;
+  color: red;
+}
+
 .playAgain {
   font-size: 15px;
   width: 120px;
@@ -88,6 +93,11 @@ h1 {
   color: black;
   font-size: 18px;
   cursor: pointer;
+}
+
+.playAgain:active {
+  font-size: 22px;
+  color: darkblue;
 }
 }
 

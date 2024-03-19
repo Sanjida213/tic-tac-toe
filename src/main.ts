@@ -61,7 +61,6 @@ const alternatePlayers = () => {
 }
 
 
-
 // player has to click on the grid to choose a positon -
 
 const choosePosition = (event: Event)  => {
@@ -93,7 +92,7 @@ cells.forEach(cell => {
   cell.addEventListener("click", choosePosition, {once: true})
 });
 
-// play Again button
+
 const playNextRound = () => {
   cells.forEach(cell => {
     cell.textContent = ""
@@ -214,6 +213,7 @@ restart.addEventListener("click", handleClickRestart)
 /// list: 
 // once someone has won or drawed, they should be able to click on board and 
 // it restarts without changing the scoreboard
+// add confetti
 // create README and look at mark scheme
 
 
@@ -230,13 +230,6 @@ restart.addEventListener("click", handleClickRestart)
 
 
 
-  // if (playerHasWon()) {
-  //   console.log(`Player ${currentPlayer} has won`)
-  //   return winningMessage()
-  // }
-
-  // startGame()
-
   
 
   // if cell is occupied and player selects it, prompt to tell them to tyr again
@@ -252,3 +245,4 @@ restart.addEventListener("click", handleClickRestart)
   //     }
   //     })
   
+
