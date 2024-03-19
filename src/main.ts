@@ -20,7 +20,7 @@ const gameBoard = document.querySelector<HTMLElement>(".gameBoard")
 const cells = document.querySelectorAll<HTMLElement>(".cells")
 const currentPlayerTurn = document.querySelector<HTMLHeadingElement>(".currentPlayer")
 const scoreBoard = document.querySelectorAll(".score")
-
+const playAgain = document.querySelector<HTMLButtonElement>(".playAgain")
 
 
 
@@ -32,7 +32,7 @@ if (scoreBoard.length === 0 ) {
   throw new Error ("Issue with scoreBoard")
 }
 
-if (!gameBoard || !currentPlayerTurn) {
+if (!gameBoard || !currentPlayerTurn || !playAgain) {
   throw new Error ("Issue with board")
 }
 console.log(cells)
@@ -42,19 +42,6 @@ console.log(cells)
 const playerX = "X";
 const playerO = "O";
 let currentPlayer = "X";
-
-
-// function to start game 
-
-// const playAgain = () => {
-//   cells.forEach(cell => {
-//     cell.textContent = ""
-//   })
-//   gameBoard.addEventListener("click", playAgain)
-// }
-
-// timer delayer
-// ^^ it should only clear out once i click on the gameboard
 
 
 const alternatePlayers = () => {
@@ -82,21 +69,20 @@ const choosePosition = (event: Event)  => {
   }
 
 
-  // draw()
 
-     if (playerHasWon()) {
-      console.log(`Player ${currentPlayer} has won`) 
-      winningMessage()    // we want to create 2 functions - end game and winning message
-      updateScoreBoard()
+    if (playerHasWon()) {
+    console.log(`Player ${currentPlayer} has won`) 
+    winningMessage()    // we want to create 2 functions - end game and winning message
+    updateScoreBoard()
+    
+    // create draw function
+    // and for the player to not be able to press anymore cells
+    
+  } else {
+    alternatePlayers()  
+  } 
 
-      
-      // create draw function
-      // and for the player to not be able to press anymore cells
-      
-    } else {
-      alternatePlayers()  
-    } 
-  
+  draw()
 };
 
 
@@ -104,8 +90,24 @@ cells.forEach(cell => {
   cell.addEventListener("click", choosePosition, {once: true})
 });
 
+// play Again button
+const playNextRound = () => {
+  cells.forEach(cell => {
+    cell.textContent = ""
+  }) 
+  currentPlayer = currentPlayer
+  currentPlayerTurn.textContent = `${currentPlayer} to move`;
+  
+  cells.forEach(cell => {
+      cell.addEventListener("click", choosePosition, { once: true });
+  });
+}
+
+playAgain.addEventListener("click", playNextRound)
 
 
+
+// winning message/condition
 const winningMessage = () => {
   currentPlayerTurn.textContent = `${currentPlayer} HAS WON!`
   currentPlayerTurn.style.fontSize = "50px"
@@ -141,33 +143,47 @@ const playerHasWon = () => {
   
 
   // create draw function
-  const draw = () => {
-    if (gameBoardIsFilled() && !playerHasWon()) {
-      // console.log (`This is a ${draw}`)
-      currentPlayerTurn.textContent = `Draw :(`
+  // const draw = () => {
+  //   if (gameBoardIsFilled() && !playerHasWon()) {
+  //     // console.log (`This is a ${draw}`)
+  //     currentPlayerTurn.textContent = `Draw :(`
+  //   }
+  // }
+
+  // const gameBoardIsFilled = () => {
+  //   for (const cell of cells) {
+  //     if (cell.textContent !== "") {
+  //       return true;
+  //     }
+  //   }
+  // }  
+
+// draw
+const draw = () => {
+  if (gameBoardIsFilled() && !playerHasWon()) {
+    console.log("its a draw")
+    currentPlayerTurn.textContent = `Draw :(`;
+  
+    score ++;
+    scoreBoard[1].innerHTML = score.toString()
+      
+    // playNextRound()
+      
+        // You might want to add some additional logic here, such as stopping further moves.
+        // You can disable event listeners on cells or implement a game-ending mechanism.
+  } 
+};
+
+const gameBoardIsFilled = () => {
+  for (const cell of cells) {
+    if (cell.textContent === "") {
+      return false; // If any cell is empty, the board is not filled
     }
   }
-
-  const gameBoardIsFilled = () => {
-    for (const cell of cells) {
-      if (cell.textContent !== "") {
-        return true;
-      }
-    }
-  }  
+  return true; // If all cells are filled, return true
+};
   
   
-// create counter for scores
-// if current player wins, then current score goes up  by 1, if draw, tie = 1
-
-// if (playerHasWon()) {
-//   scoreBoard.forEach(score) => {
-//     score.innerText += "1"
-//   }
-// }
-
-
-
 
 console.log(scoreBoard)
 
@@ -218,23 +234,22 @@ to say 'game restarted
   // }
 
 
-
+  let score: number = 0
 
 const updateScoreBoard = () => {
   if (currentPlayer === playerX) {
-    let score: number = 0
     score ++;
-    scoreBoard[0].innerHTML += score  
+    scoreBoard[0].innerHTML = score.toString()
     // playAgain()
   } else if (currentPlayer === playerO) {
-    let score: number = 0
     score ++;
-    scoreBoard[2].innerHTML += score 
-  } else {
-    let score: number = 0
-    score ++;
-    scoreBoard[1].innerHTML += score
-  }
+    scoreBoard[2].innerHTML = score.toString()
+  } 
+  // else {
+  //   let score: number = 0
+  //   score ++;
+  //   scoreBoard[1].innerHTML += score
+  // }
 }
 
 
