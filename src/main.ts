@@ -75,7 +75,7 @@ const choosePosition = (event: Event)  => {
     winningMessage()    // we want to create 2 functions - end game and winning message
     updateScoreBoard()
     
-    // create draw function
+    
     // and for the player to not be able to press anymore cells
     
   } else {
@@ -166,11 +166,6 @@ const draw = () => {
   
     score ++;
     scoreBoard[1].innerHTML = score.toString()
-      
-    // playNextRound()
-      
-        // You might want to add some additional logic here, such as stopping further moves.
-        // You can disable event listeners on cells or implement a game-ending mechanism.
   } 
 };
 
@@ -187,7 +182,7 @@ const gameBoardIsFilled = () => {
 
 console.log(scoreBoard)
 
-
+// when player x wins twice, player 2 goes to 3 points automatically
 
 
 
