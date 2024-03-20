@@ -8,7 +8,7 @@ const currentPlayerTurn = document.querySelector<HTMLHeadingElement>(".currentPl
 const scoreBoard = document.querySelectorAll(".score")
 const playAgain = document.querySelector<HTMLButtonElement>(".playAgain")
 const restart = document.querySelector<HTMLButtonElement>(".restart-button")
-
+const audio = document.querySelector("audio")
 
 if (cells.length === 0 ) {
   throw new Error ("Issue with querySelectorAll")
@@ -21,7 +21,8 @@ if (scoreBoard.length === 0 ) {
 if (!gameBoard || 
   !currentPlayerTurn || 
   !playAgain || 
-  !restart) {
+  !restart || 
+  !audio) {
   throw new Error ("Issue with selector")
 }
 
@@ -72,7 +73,8 @@ const choosePosition = (event: Event)  => {
     updateScoreBoard()
     roundOver()
     confetti(options);
-    
+    audio.currentTime = 0;   // resetting the audio to the start
+    audio.play(); //plays the audio
   } else {
     alternatePlayers()  
   } 
