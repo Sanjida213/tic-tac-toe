@@ -22,7 +22,7 @@ img {
 }
 
 h1 {
-  font-size: 20px;
+  font-size: 35px;
 }
 
 .gameBoard {
@@ -40,7 +40,6 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // background-color: rgb(8, 88, 88);
     background-color: teal;
     font-size: 60px;
     font-family: "Permanent Marker", cursive;
@@ -73,7 +72,6 @@ h1 {
     height: 40px;
     border: none;
     background-color: lightblue;
-    // background-color: rgba(255, 166, 0, 0.89);
     color: black;
     font-size: 18px;
     cursor: pointer;
@@ -104,49 +102,49 @@ h1 {
 
 @media screen and (min-width: 768px) {
 
-h1 {
-  font-size: 22px;
-}
-
-img {
-  height: 130px;
-  width: 600px;
-}  
-
-.gameBoard {
-  width: 320px;
-  height: 380px;
-  gap: 7px;
-
-  .cells {
-    font-size: 80px;
+  h1 {
+    font-size: 22px;
   }
-}
 
-.scores {
-  font-size: 30px;
-  width: 420px;
+  img {
+    height: 130px;
+    width: 600px;
+  }  
 
-  .score {
-    font-size: 50px;
-  }
-}
+  .gameBoard {
+    width: 320px;
+    height: 380px;
+    gap: 7px;
 
-.buttons {
- gap: 20px; 
+    .cells {
+      font-size: 80px;
+    }
+  }
 
-  .restart-button {
-    font-size: 25px;
-    width: 120px;
-    height: 50px;
+  .scores {
+    font-size: 30px;
+    width: 420px;
+
+    .score {
+      font-size: 50px;
+    }
   }
-  
-  .playAgain {
-    font-size: 25px;
-    width: 150px;
-    height: 50px;
-  }
-  }
+
+  .buttons {
+  gap: 20px; 
+
+    .restart-button {
+      font-size: 25px;
+      width: 120px;
+      height: 50px;
+    }
+    
+    .playAgain {
+      font-size: 25px;
+      width: 150px;
+      height: 50px;
+    }
+    }
 
 }
   

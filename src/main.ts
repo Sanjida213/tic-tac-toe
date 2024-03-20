@@ -44,6 +44,7 @@ const options : Options = {
   colors : ["#ee2fbe2", "#abe2de", "#65ae3c"],
 };
 
+// audios
 const victoryAudio = () => {
   celebrationAudio.currentTime = 0;  
   celebrationAudio.play();
@@ -59,10 +60,10 @@ const alternatePlayers = () => {
 
   if (currentPlayer === playerO) {
     currentPlayer = playerX
-    currentPlayerTurn.textContent = `Player 1 to move`
+    currentPlayerTurn.textContent = `Player X to move`
   } else if (currentPlayer === playerX) {
     currentPlayer = playerO
-    currentPlayerTurn.textContent = `Player 2 to move`
+    currentPlayerTurn.textContent = `Player O to move`
   }   
 }
 
@@ -72,7 +73,6 @@ const alternatePlayers = () => {
 const choosePosition = (event: Event)  => {
   const cellChosen = event.currentTarget as HTMLElement;
   console.log("current player" + currentPlayer)
- 
  
   if (cellChosen.textContent === "") {
   cellChosen.textContent += currentPlayer;
@@ -101,6 +101,36 @@ cells.forEach(cell => {
 });
 
 
+// winning message/condition
+const winningMessage = () => {
+  currentPlayerTurn.textContent = `${currentPlayer} HAS WON!`
+  currentPlayerTurn.style.fontSize = "50px"
+  currentPlayerTurn.style.fontFamily =  "Permanent Marker";
+  currentPlayerTurn.style.textAlign = "center"
+}
+
+// scoreboard 
+const updateScoreBoard = () => {
+  if (currentPlayer === playerX) {
+    scoreX ++;
+    scoreBoard[0].innerHTML = scoreX.toString()
+  } else if (currentPlayer === playerO) {
+    scoreO ++;
+    scoreBoard[2].innerHTML = scoreO.toString()
+  } 
+}
+
+console.log(scoreBoard)
+
+
+// cells cannot be clicked & scoreboard cannot be changed once player has won
+const roundOver = () => {
+  cells.forEach(cell => {
+    cell.removeEventListener("click", choosePosition);
+  });
+};
+
+
 // play Again button
 const playNextRound = () => {
   cells.forEach(cell => {
@@ -117,21 +147,8 @@ const playNextRound = () => {
 playAgain.addEventListener("click", playNextRound)
 
 
-// cells cannot be clicked & scoreboard cannot be changed once player has won
-const roundOver = () => {
-  cells.forEach(cell => {
-    cell.removeEventListener("click", choosePosition);
-  });
-};
 
 
-// winning message/condition
-const winningMessage = () => {
-  currentPlayerTurn.textContent = `${currentPlayer} HAS WON!`
-  currentPlayerTurn.style.fontSize = "50px"
-  currentPlayerTurn.style.fontFamily =  "Permanent Marker";
-  currentPlayerTurn.style.textAlign = "center"
-}
 
 
 const winningCombinations = [
@@ -176,26 +193,13 @@ const draw = () => {
 const gameBoardIsFilled = () => {
   for (const cell of cells) {
     if (cell.textContent === "") {
-      return false; // If any cell is empty, the board is not filled
+      return false; 
     }
   }
-  return true; // If all cells are filled, return true
+  return true; 
 };
   
   
-
-// scoreboard 
-const updateScoreBoard = () => {
-  if (currentPlayer === playerX) {
-    scoreX ++;
-    scoreBoard[0].innerHTML = scoreX.toString()
-  } else if (currentPlayer === playerO) {
-    scoreO ++;
-    scoreBoard[2].innerHTML = scoreO.toString()
-  } 
-}
-
-console.log(scoreBoard)
 
 
 
@@ -223,8 +227,3 @@ const handleClickRestart = () => {
 restart.addEventListener("click", handleClickRestart)
 
 
-
-
-/// list: 
-// create README and look at mark scheme
-// host site
