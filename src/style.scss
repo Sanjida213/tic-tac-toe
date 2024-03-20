@@ -31,7 +31,7 @@ img {
 }
 
 h1 {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .gameBoard {
@@ -114,6 +114,10 @@ h1 {
 
 
 @media screen and (min-width: 768px) {
+
+h1 {
+  font-size: 25px;
+}
 
 img {
   height: 150px;

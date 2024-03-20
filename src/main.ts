@@ -1,4 +1,5 @@
 import './style.scss'
+import confetti, {Options} from "canvas-confetti"
 
 /* PSEUDOCODE
 
@@ -48,6 +49,13 @@ let scoreX: number = 0
 let scoreO: number = 0
 let scoreTie: number = 0
 
+// confetti package 
+const options : Options = {
+  particleCount : 250,
+  spread : 280,
+  colors : ["#ee2fbe2", "#abe2de", "#65ae3c"],
+};
+
 
 const alternatePlayers = () => {
 
@@ -62,21 +70,15 @@ const alternatePlayers = () => {
 
 
 // player has to click on the grid to choose a positon -
-// let gameOver = false; // so game is still going on
-
-
 
 const choosePosition = (event: Event)  => {
- 
-
   const cellChosen = event.currentTarget as HTMLElement;
   console.log("current player" + currentPlayer)
  
-  // if (gameOver === false) {
-    if (cellChosen.textContent === "") {
-    cellChosen.textContent += currentPlayer;
-    }
-  // }
+ 
+  if (cellChosen.textContent === "") {
+  cellChosen.textContent += currentPlayer;
+  }
   
 
   if (playerHasWon()) {
@@ -84,12 +86,14 @@ const choosePosition = (event: Event)  => {
     winningMessage()   
     updateScoreBoard()
     roundOver()
+    confetti(options);
     
   } else {
       alternatePlayers()  
   } 
 
   draw()
+
 };
 
 
@@ -98,6 +102,7 @@ cells.forEach(cell => {
 });
 
 
+// play Again button
 const playNextRound = () => {
   cells.forEach(cell => {
     cell.textContent = ""
@@ -178,10 +183,7 @@ const gameBoardIsFilled = () => {
   
   
 
-console.log(scoreBoard)
-
-// when player x wins twice, player 2 goes to 3 points automatically
-
+// scoreboard 
 const updateScoreBoard = () => {
   if (currentPlayer === playerX) {
     scoreX ++;
@@ -192,6 +194,7 @@ const updateScoreBoard = () => {
   } 
 }
 
+console.log(scoreBoard)
 
 
 
@@ -221,12 +224,12 @@ restart.addEventListener("click", handleClickRestart)
 
 
 
-
 /// list: 
 // once someone has won or drawed, they should be able to click on board and 
 // it restarts without changing the scoreboard
 // add confetti
 // create README and look at mark scheme
+// host site
 
 
  // if turn = p2, select 'O', else if turn = p1. select 'X
