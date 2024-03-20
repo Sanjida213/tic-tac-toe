@@ -1,21 +1,6 @@
 import './style.scss'
 import confetti, {Options} from "canvas-confetti"
 
-/* PSEUDOCODE
-
-create an empty 3x3 grid. >
-assign player 1 as X and player 2 as 0 >
-player has to click on the grid to choose a positon - 
-- if that position is not occupied, they can place their symbol >
-- if it position is occupied, prompt the player to choose again -> maybe to for aloop for the cell with i < 1
-once the player has placed their symbol, the board should be updated >
-create a winning function that is 3 same symbols in a row, column or diagonal
-- if player wins, end game -> add package e.g. confetti
-- if player wins, counter for that player should go up
-- if board is full but there are no winnters, declare the game a draw 
-if players want to play again, reset the board and start a new game, if not end game
-
-*/
 
 const gameBoard = document.querySelector<HTMLElement>(".gameBoard")
 const cells = document.querySelectorAll<HTMLElement>(".cells")
@@ -89,7 +74,7 @@ const choosePosition = (event: Event)  => {
     confetti(options);
     
   } else {
-      alternatePlayers()  
+    alternatePlayers()  
   } 
 
   draw()
@@ -130,6 +115,7 @@ const roundOver = () => {
 const winningMessage = () => {
   currentPlayerTurn.textContent = `${currentPlayer} HAS WON!`
   currentPlayerTurn.style.fontSize = "50px"
+  currentPlayerTurn.style.fontFamily =  "Permanent Marker";
   currentPlayerTurn.style.textAlign = "center"
 }
 
@@ -225,39 +211,5 @@ restart.addEventListener("click", handleClickRestart)
 
 
 /// list: 
-// once someone has won or drawed, they should be able to click on board and 
-// it restarts without changing the scoreboard
-// add confetti
 // create README and look at mark scheme
 // host site
-
-
- // if turn = p2, select 'O', else if turn = p1. select 'X
-  // if (turn === playerO) {   // the === returns a true/false so  turn === player 2 is false so we got straight to the else statemtn
-  //   turn = playerX            // but if turn is not === player 2 which means its player1, that results true as line 29 assigns turn = playe1
-  // } else {                    // so then it returns the if statement
-  //   turn = playerO
-  // }
-
-
-
-
-
-
-
-  
-
-  // if cell is occupied and player selects it, prompt to tell them to tyr again
-  // if(cellChosen.textContent === "") {
-  //   return alert("Try again")
-  // }
-
-  //if all the content of the cells are not empty and playerhsaWon == false then function draw to be invoked
-  
-  // cells.forEach(cell => {
-  //     if ((cell.textContent === playerX || playerO) && !playerHasWon() ) {
-  //       console.log(`ee`)
-  //     }
-  //     })
-  
-
