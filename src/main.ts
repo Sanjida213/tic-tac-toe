@@ -113,6 +113,7 @@ const playNextRound = () => {
 playAgain.addEventListener("click", playNextRound)
 
 
+// cells cannot be clicked & scoreboard cannot be changed once player has won
 const roundOver = () => {
   cells.forEach(cell => {
     cell.removeEventListener("click", choosePosition);
