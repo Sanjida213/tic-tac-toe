@@ -96,10 +96,6 @@ const choosePosition = (event: Event)  => {
 };
 
 
-cells.forEach(cell => {
-  cell.addEventListener("click", choosePosition, {once: true})
-});
-
 
 // winning message/condition
 const winningMessage = () => {
@@ -143,10 +139,6 @@ const playNextRound = () => {
       cell.addEventListener("click", choosePosition, { once: true });
   });
 }
-
-playAgain.addEventListener("click", playNextRound)
-
-
 
 
 
@@ -226,4 +218,9 @@ const handleClickRestart = () => {
 
 restart.addEventListener("click", handleClickRestart)
 
+cells.forEach(cell => {
+  cell.addEventListener("click", choosePosition, {once: true})
+});
+
+playAgain.addEventListener("click", playNextRound)
 
